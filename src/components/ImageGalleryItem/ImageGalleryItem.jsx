@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import { StyledImageGalleryItem } from './ImageGalleryItem.styled';
 
 export const ImageGalleryItem = ({ image, getLargeImage }) => {
