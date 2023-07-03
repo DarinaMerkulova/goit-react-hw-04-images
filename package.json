@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-find-image",
+  "name": "goit-react-hw-finder-image",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://darinamerkulova.github.io/goit-react-hw-find-image/",
+  "homepage": "https://darinamerkulova.github.io/goit-react-hw-finder-image/",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
