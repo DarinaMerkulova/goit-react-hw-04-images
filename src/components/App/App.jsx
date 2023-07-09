@@ -90,7 +90,7 @@ export const App = () => {
         dataLength={images.length}
         next={handleLoadMore}
         hasMore={hasMore}
-        loader={<Loader />}
+   
       >
       {images.length > 0 ? (
         <ImageGallery images={images} getLargeImage={getLargeImage} />
