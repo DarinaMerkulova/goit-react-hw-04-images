@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component'
 import fetchImages from 'services/api';
 
 import { SearchBar } from 'components/Searchbar/Searchbar';
@@ -8,7 +9,7 @@ import { Container } from './App.styled';
 import { toast } from 'react-toastify';
 import { Loader } from 'components/Loader/Loader';
 import { Modal } from 'components/Modal/Modal';
-import { BtnLoadMore } from 'components/Button/Button';
+// import { BtnLoadMore } from 'components/Button/Button';
 import { ErrorText } from 'components/HelpersText/Errors.Text/ErrorsText';
 import { EmptyGallaryList } from 'components/HelpersText/Errors.Text/EmptyGalleryList/EmptyGalleryList';
 
@@ -32,13 +33,17 @@ export const App = () => {
   const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [hasMore, setHasMore] = useState(true)
 
   const toggleModal = () => {
     setShowModal(() => !showModal);
   };
 
   const handleLoadMore = () => {
-    setPage(prevState => prevState + 1);
+    if (page < totalPages) {
+      setPage(prevPage => prevPage + 1);
+    } else {
+      setHasMore(false);}
   };
 
   const getLargeImage = largeImage => {
@@ -72,6 +77,8 @@ export const App = () => {
   const handleSubmit = value => {
     setName(value);
     setImages([]);
+    setPage(1);
+    setHasMore(true);
   };
 
   return (
@@ -79,17 +86,24 @@ export const App = () => {
       <SearchBar onSubmit={handleSubmit} />
       {error && <ErrorText />}
       {isLoading && <Loader />}
+      <InfiniteScroll
+        dataLength={images.length}
+        next={handleLoadMore}
+        hasMore={hasMore}
+        loader={<Loader />}
+      >
       {images.length > 0 ? (
         <ImageGallery images={images} getLargeImage={getLargeImage} />
       ) : (
         !isLoading && !error && <EmptyGallaryList />
-      )}
+      )}</InfiniteScroll>
       {showModal && (
         <Modal largeImage={largeImage} onCloseModal={toggleModal} />
       )}
-      {images.length > 0 && totalPages !== page && !isLoading && (
+       {/* Кнопка loadMore  */}
+       {/* {images.length > 0 && totalPages !== page && !isLoading && (
         <BtnLoadMore onClick={handleLoadMore} />
-      )}
+      )}  */}
     </Container>
   );
 };
