@@ -1,6 +1,6 @@
 import { CgSearch } from 'react-icons/cg';
 import PropTypes from 'prop-types'
-import { Component } from 'react';
+import {useState } from 'react';
 import {
   StyledSearchForm,
   StyledSearchFormButton,
@@ -8,27 +8,22 @@ import {
   StyledSearchbar,
 } from './Searchbar.styled';
 
-export class SearchBar extends Component {
-  state = { value: '' };
-
-  handleInputChange = ({ target }) => {
-    // console.log(event.target.value);
-    this.setState({
-      value: target.value,
-    });
+export const SearchBar =({onSubmit}) => { 
+  const [value, setValue] = useState ('')
+  
+  const handleInputChange = ({ target }) => {
+    setValue(target.value)
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const value = this.state.value;
-    this.props.onSubmit(value);
+    onSubmit(value);
   };
 
-  render() {
-    return (
+   return (
       <div>
         <StyledSearchbar>
-          <StyledSearchForm onSubmit={this.handleSubmit}>
+          <StyledSearchForm onSubmit={handleSubmit}>
             <StyledSearchFormButton type="submit">
               <CgSearch size="1.5em" />
             </StyledSearchFormButton>
@@ -38,15 +33,14 @@ export class SearchBar extends Component {
               type="text"
               autocomplete="off"
               placeholder="Search images and photos"
-              value={this.state.value}
-              onChange={this.handleInputChange}
+              value={value}
+              onChange={handleInputChange}
             />
           </StyledSearchForm>
         </StyledSearchbar>
       </div>
     );
   }
-}
 SearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };

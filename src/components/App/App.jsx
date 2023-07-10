@@ -75,6 +75,7 @@ export const App = () => {
   }, [name, page]);
 
   const handleSubmit = value => {
+    if (name === value) return
     setName(value);
     setImages([]);
     setPage(1);
